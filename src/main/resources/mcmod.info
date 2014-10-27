@@ -1,0 +1,16 @@
+[
+{
+  "modid": "mctd",
+  "name": "Minecraft Tower Defense",
+  "description": "Tower defense for minecraft.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["ExampleDude"],
+  "credits": "coldfusion571",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
