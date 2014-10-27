@@ -1,7 +1,0 @@
-tile.startBlock.name=Start Block
-tile.endBlock.name=End Block
-tile.waypointBlock.name=Waypoint Block
-
-itemGroup.McTd=Minecraft Tower Defense
-
-entity.mctdMob.name=McTd Mob
