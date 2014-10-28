@@ -32,6 +32,7 @@ public class WaypointBlock extends BlockContainer{
 	public void registerBlockIcons(IIconRegister side){
 		blockIcon    = side.registerIcon(McTd.MODID + ":" + this.getUnlocalizedName().substring(5));
 		blockIconTop = side.registerIcon(McTd.MODID + ":" + this.getUnlocalizedName().substring(5) + "Top");
+		System.out.println("wpblockicon:"+blockIcon);
 	}
 	
 	@SideOnly(Side.CLIENT)
