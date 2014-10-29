@@ -71,7 +71,7 @@ public class EntityAITdPathing extends EntityAIBase {
     		//
     		// Try and move to target
     		//
-	    	this.entity.getLookHelper().setLookPosition(t.xCoord, t.yCoord, t.zCoord, 5.0F, 5.0F);
+	    //	this.entity.getLookHelper().setLookPosition(t.xCoord, t.yCoord, t.zCoord, 5.0F, 5.0F);
 	    	this.entity.getNavigator().tryMoveToXYZ(t.xCoord, t.yCoord, t.zCoord, this.speed);
     	}
     	else if( this.entity.finalTarget ){

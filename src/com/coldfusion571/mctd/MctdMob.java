@@ -35,7 +35,7 @@ public class MctdMob extends EntityMob {
 		this.end = McTd.endBlockEntity;
 		this.tasks.addTask(0, new EntityAITdPathing(this, 1.5D));
 		this.id = McTd.instance.getMobId();
-		this.jumpMovementFactor = 0.5F;
+		//this.jumpMovementFactor = 0.6F;
 	}
 
 	public boolean isAIEnabled(){
