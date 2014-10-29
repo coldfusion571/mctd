@@ -52,7 +52,12 @@ public class McTd
     private int waveSize;
     private int mobId;
     private int wpId;
+    private int lives;
+    private int warnTicks;
+    private int interWaveTicks;
+    private int waveMobsSent;
     private Minecraft mcObj;
+    private boolean inWave;
     
     private MctdMob[] activeMobs;
     
@@ -67,9 +72,14 @@ public class McTd
     	this.waveInterval = 800;
     	this.waveCnt = 0;
     	this.waveLimit = 1;
-    	this.waveSize = 1;
+    	this.waveSize = 5;
     	this.mobId = 0;
     	this.wpId = 0;
+    	this.lives = 5;
+    	this.warnTicks = 200; // 10 second wave announcement
+    	this.interWaveTicks = 40; // 2 seconds between mobs
+    	this.inWave = false;
+    	this.waveMobsSent = 0;
     	
     	startBlock = new StartBlock(this.mcObj).setBlockName("startBlock").setCreativeTab(tabMcTD).setBlockTextureName(McTd.MODID + ":startBlock");
     	GameRegistry.registerBlock(startBlock, startBlock.getUnlocalizedName());
@@ -111,19 +121,40 @@ public class McTd
     }
     
     public void tick(){
+    	//
+    	// If we've reached wave limit, stop caring
+    	//
+    	if( this.waveCnt > this.waveLimit ||
+    		startBlockEntity == null      ||
+			endBlockEntity   == null  ){
+    		return;
+    	}
+    
+    	//
+    	// Increment timer and send waves when appropriate
+    	//
     	++this.timer;
-    	if( this.timer >= this.waveInterval ){
+    	if( this.timer == this.waveInterval - this.warnTicks ){
+    		String msg = "Wave coming in " + this.warnTicks/20 + " seconds!";
+    		proxy.printMessageToPlayer(msg);
+    	}
+    	if( this.timer >= this.waveInterval
+    		&& !this.inWave ){
+    		this.inWave = true;
+    	}
+    	
+    	int wavePlus = this.timer - this.waveInterval;
+    	
+    	if( wavePlus > 0 &&
+    		wavePlus % this.interWaveTicks == 0 &&
+    		this.waveMobsSent < this.waveSize ){
+    		startBlockEntity.spawnMob();
+    		this.waveMobsSent++;
+    	}
+    	
+    	if( this.waveMobsSent >= this.waveSize ){
+    		this.waveCnt++;
     		this.timer = 0;
-			if( startBlockEntity != null &&
-				endBlockEntity   != null && 
-				this.waveCnt < this.waveLimit ){
-				String msg = "Wave " + (this.waveCnt++) + " Being Sent!";
-				System.out.println(msg);
-				proxy.printMessageToPlayer(msg);
-				for( int i=0; i<this.waveSize; i++ ){
-					startBlockEntity.spawnMob();
-				}
-			}
     	}
     }
     
@@ -133,5 +164,15 @@ public class McTd
     
     public int getWpId(){
     	return this.wpId++;
+    }
+    
+    public void loseLife( int arg1 ){
+    	this.lives -= arg1;
+    	String msg = "You have lost a life!";
+    	proxy.printMessageToPlayer(msg);
+    	if( this.lives <= 0 ){
+    		msg = "You have lost all your lives!";
+    		proxy.printMessageToPlayer(msg);
+    	}
     }
 }

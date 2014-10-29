@@ -21,7 +21,6 @@ public class EndBlock extends BlockContainer{
 	
 	protected EndBlock( Minecraft mcObj ){
 		super(Material.ground);
-
 	}
 	
 	@SideOnly(Side.CLIENT)

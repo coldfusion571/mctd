@@ -5,6 +5,7 @@ import java.util.Iterator;
 import com.coldfusion571.tileentities.TileEntityEndBlock;
 import com.coldfusion571.tileentities.TileEntityWaypointBlock;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAITarget;
 import net.minecraft.entity.ai.EntityAITasks;
@@ -32,7 +33,7 @@ public class MctdMob extends EntityMob {
 		this.completedWaypoints = false;
 		this.completedPathing = false;
 		this.end = McTd.endBlockEntity;
-		this.tasks.addTask(0, new EntityAITdPathing(this, 1.0D));
+		this.tasks.addTask(0, new EntityAITdPathing(this, 1.5D));
 		this.id = McTd.instance.getMobId();
 	}
 
@@ -47,54 +48,28 @@ public class MctdMob extends EntityMob {
 		this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.25D);
 	}
 	
-	public boolean getCompletedWaypoints(){
-		return this.completedWaypoints;
-	}
-	
-	public void setCompletedWaypoints(boolean arg1){
-		this.completedWaypoints = arg1;
-	}
-	
-	public boolean getCompletedPathing(){
-		return this.completedPathing;
-	}
-	
-	public void setCompletedPathing(boolean arg1){
-		this.completedWaypoints = arg1;
+	public void setWaypoint(TileEntityWaypointBlock arg1){
+		this.waypoint = arg1;
 	}
 	
 	public TileEntityWaypointBlock getWaypoint(){
 		return this.waypoint;
 	}
-	
-	public void setWaypoint(TileEntityWaypointBlock arg1){
-		this.waypoint = arg1;
+
+	public void setEnd(TileEntityEndBlock arg1){
+		this.end = arg1;
 	}
 	
 	public TileEntityEndBlock getEnd(){
 		return this.end;
 	}
 	
-	public void setEnd(TileEntityEndBlock arg1){
-		this.end = arg1;
+	public void setTargetEntity(TileEntity arg1){
+		this.target = arg1;
 	}
 	
-	public void setTarget( float x, float y, float z ){
-		this.target_x = x;
-		this.target_y = y;
-		this.target_z = z;
-	}
-	
-	public float[] getTarget(){
-		if( this.target_x != 0.0F &&
-			this.target_y != 0.0F &&
-			this.target_z != 0.0F ){
-			float[] a = {this.target_x, this.target_y, this.target_z};
-			return a;
-		}
-		else{
-			return null;
-		}
+	public TileEntity getTargetEntity(){
+		return this.target;
 	}
 	
 	public void setWaypointIterator(Iterator arg1){
